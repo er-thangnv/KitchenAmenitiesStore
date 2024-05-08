@@ -77,7 +77,118 @@
   </head>
 
   <body>
-    {% include 'header.html' %} {% include 'footer.html' %}
+    {% include 'header.html' %}
+    <section class="from-blog spad">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="section-title from-blog__title">
+              <h2>Chuỗi Mới Deal Khủng</h2>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4 col-md-4 col-sm-6">
+            <div class="blog__item">
+              <div class="blog__item__pic">
+                <img
+                  src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/2023/05/banner/760x400-760x400-1.jpg"
+                  alt=""
+                />
+              </div>
+              <div class="blog__item__text">
+                <ul>
+                  <li><i class="fa fa-calendar-o"></i> Từ 12/05 - 14/05</li>
+                </ul>
+                <h5>
+                  <a
+                    href="https://www.avakids.com/online-gia-re?utm_source=avakids&utm_medium=2050&utm_campaign=ngaycuame"
+                    >Deal tặng mẹ. Giảm sốc đến 50%</a
+                  >
+                </h5>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-6">
+            <div class="blog__item">
+              <div class="blog__item__pic">
+                <img
+                  src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/2023/05/banner/760-x-400-NH-760x400-3.png"
+                  alt=""
+                />
+              </div>
+              <div class="blog__item__text">
+                <ul>
+                  <li><i class="fa fa-calendar-o"></i> Từ 28/05 - 19/06</li>
+                </ul>
+                <h5>
+                  <a
+                    href="https://www.avakids.com/?utm_source=DMX&utm_medium=Banner2050&utm_campaign=GiadungT5#gia-soc"
+                    >Đại tiệc gia dụng. Giảm sốc tới nốc 50%</a
+                  >
+                </h5>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-6">
+            <div class="blog__item">
+              <div class="blog__item__pic">
+                <img
+                  src="https://img.tgdd.vn/imgt/f_webp,fit_outside,quality_100/https://cdn.tgdd.vn/2023/03/banner/760-400-760x400-1.png"
+                  alt=""
+                />
+              </div>
+              <div class="blog__item__text">
+                <ul>
+                  <li><i class="fa fa-calendar-o"></i> Từ 13/05 - 17/07</li>
+                </ul>
+                <h5>
+                  <a href="https://www.dichvutantam.com/">Vệ sinh máy lạnh</a>
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="latest-product spad">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="section-title from-blog__title">
+              <h2>Sản phẩm mới nhất</h2>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          {% for product in new_products %}
+          <div class="col-lg-4 col-md-6">
+            <div class="latest-product__text">
+              <div class="latest-product__slider owl-carousel">
+                <div class="latest-prdouct__slider__item">
+                  <a
+                    href="/KitchenAmenitiesStore/products/{{product.id}}"
+                    class="latest-product__item"
+                  >
+                    <div class="latest-product__item__pic">
+                      <img src="{{ product.image }}" alt="" />
+                    </div>
+                    <div class="latest-product__item__text">
+                      <h6>{{ product.name }}</h6>
+                      <span>{{ product.price }} VNĐ</span>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+
+    {% include 'footer.html' %}
 
     <!-- Js Plugins -->
     <script src="{% static 'js/hjquery-3.3.1.min.js' %}"></script>
@@ -92,6 +203,7 @@
     <script src="{% static 'js/departments.js' %}"></script>
     <script src="{% static 'js/trademark.js' %}"></script>
     <script src="{% static 'js/current-user.js' %}"></script>
+    <script src="{% static 'js/products.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
