@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'department',
     'bootstrap4',
     'trademark',
-    'user'
+    'user',
+    'product'
 ]
 
 MIDDLEWARE = [
