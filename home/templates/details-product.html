@@ -1,0 +1,252 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zxx">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Ogani Template" />
+    <meta name="keywords" content="Ogani, unica, creative, html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Home</title>
+
+    <!-- Google Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Css Styles -->
+    <link
+      rel="stylesheet"
+      href="{% static 'css/hbootstrap.min.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/hfont-awesome.min.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/helegant-icons.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/hnice-select.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/hjquery-ui.min.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/howl.carousel.min.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/hslicknav.min.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/hstyle.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <!-- Google Fonts Roboto -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/mdb.min.css' %}"
+      type="text/css"
+    />
+  </head>
+
+  <body>
+    <style>
+      /* CSS cho modal */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.9);
+      }
+      .modal-content {
+        margin: auto;
+        display: block;
+        max-width: 80%;
+        max-height: 80;
+      }
+
+      .close {
+        position: absolute;
+        top: 15px;
+        right: 35px;
+        color: #fff;
+        font-size: 40px;
+        font-weight: bold;
+        transition: 0.3s;
+      }
+
+      .close:hover,
+      .close:focus {
+        color: #bbb;
+        text-decoration: none;
+        cursor: pointer;
+      }
+    </style>
+    {% include 'header.html' %}
+    <section class="from-blog spad">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="section-title from-blog__title">
+              <h2>Thông Tin Sản Phẩm</h2>
+              <div class="breadcrumb__option" style="margin-top: 20px">
+                <a href="/KitchenAmenitiesStore/home" style="color: black"
+                  >Trang Chủ</a
+                >
+                <span style="color: black">Sản phẩm</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="product-details spad">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 col-md-6">
+            <div class="product__details__pic">
+              <div class="product__details__pic__item">
+                <iframe
+                  width="560"
+                  height="315"
+                  src="https://www.youtube.com/embed/{{details_product.video}}"
+                  title="YouTube video player"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen
+                ></iframe>
+              </div>
+              <div class="product__details__pic__slider owl-carousel">
+                {% for image in details_product.images %}
+                <img data-imgbigurl="{{ image}}" src="{{ image }}" alt="" />
+                {% endfor %}
+              </div>
+              <div id="imageModal" class="modal">
+                <span class="close">&times;</span>
+                <img class="modal-content" id="img01" />
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6">
+            <div class="product__details__text">
+              <h3>{{details_product.name}}</h3>
+              <div class="product__details__rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-half-o"></i>
+              </div>
+              <div class="product__details__price">
+                {{details_product.price}} VNĐ
+              </div>
+              <div class="product__details__quantity">
+                <div class="quantity">
+                  <div class="pro-qty">
+                    <input
+                      id="quantity-cart-{{details_product.id}}"
+                      type="number"
+                      value="1"
+                    />
+                  </div>
+                </div>
+              </div>
+              <a href="#" class="heart-icon"
+                ><span class="icon_heart_alt"></span
+              ></a>
+              <a
+                href="#"
+                type="button"
+                class="primary-btn add-cart"
+                data-id="{{details_product.id}}"
+                >Thêm vào giỏ hàng</a
+              >
+              <ul>
+                <li>
+                  <b>Thương hiệu</b> <span>{{details_product.brand}}</span>
+                </li>
+                <li><b>Màu sắc</b> <span>{{details_product.color}}</span></li>
+                <li>
+                  <b>Trạng thái</b> <span>{{details_product.status}}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-12">
+            <div class="product__details__tab">
+              <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                  <a
+                    class="nav-link active"
+                    data-toggle="tab"
+                    href="#tabs-1"
+                    role="tab"
+                    aria-selected="true"
+                    >Mô tả chi tiết sản phẩm</a
+                  >
+                </li>
+              </ul>
+              <div class="tab-content">
+                <div class="tab-pane active" id="tabs-1" role="tabpanel">
+                  <div class="product__details__tab__desc">
+                    <p>{{details_product.description}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    {% include 'footer.html' %}
+
+    <!-- Js Plugins -->
+    <script src="{% static 'js/hjquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/hbootstrap.min.js' %}"></script>
+    <script src="{% static 'js/hjquery.nice-select.min.js' %}"></script>
+    <script src="{% static 'js/hjquery-ui.min.js' %}"></script>
+    <script src="{% static 'js/hjquery.slicknav.js' %}"></script>
+    <script src="{% static 'js/hmixitup.min.js' %}"></script>
+    <script src="{% static 'js/howl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/hmain.js' %}"></script>
+    <script src="{% static 'js/mdb.min.js' %}"></script>
+    <script src="{% static 'js/departments.js' %}"></script>
+    <script src="{% static 'js/trademark.js' %}"></script>
+    <script src="{% static 'js/details-product.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  </body>
+</html>

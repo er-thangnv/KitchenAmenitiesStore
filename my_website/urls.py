@@ -22,6 +22,7 @@ urlpatterns = [
     path('KitchenAmenitiesStore/', include('register.urls')),
     path('KitchenAmenitiesStore/', include('login.urls')),
     path('KitchenAmenitiesStore/', include('home.urls')),
+    path('KitchenAmenitiesStore/', include('product.urls')),
     path('api/v1/', include('register.urls')),
     path('api/v1/', include('login.urls')),
     path('api/v1/', include('department.urls')),
