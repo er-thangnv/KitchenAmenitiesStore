@@ -48,7 +48,9 @@ INSTALLED_APPS = [
     'bootstrap4',
     'trademark',
     'user',
-    'product'
+    'product',
+    'checkout',
+    'order'
 ]
 
 MIDDLEWARE = [
@@ -140,3 +142,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+SECURE_CROSS_ORIGIN_OPENER_POLICY='same-origin-allow-popups'

@@ -23,10 +23,12 @@ urlpatterns = [
     path('KitchenAmenitiesStore/', include('login.urls')),
     path('KitchenAmenitiesStore/', include('home.urls')),
     path('KitchenAmenitiesStore/', include('product.urls')),
+    path('KitchenAmenitiesStore/', include('checkout.urls')),
     path('api/v1/', include('register.urls')),
     path('api/v1/', include('login.urls')),
     path('api/v1/', include('department.urls')),
     path('api/v1/', include('trademark.urls')),
     path('api/v1/', include('user.urls')),
     path('api/v1/', include('product.urls')),
+    path('api/v1/', include('order.urls')),
 ]

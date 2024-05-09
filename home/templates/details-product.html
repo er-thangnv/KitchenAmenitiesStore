@@ -172,26 +172,12 @@
               <div class="product__details__price">
                 {{details_product.price}} VNĐ
               </div>
-              <div class="product__details__quantity">
-                <div class="quantity">
-                  <div class="pro-qty">
-                    <input
-                      id="quantity-cart-{{details_product.id}}"
-                      type="number"
-                      value="1"
-                    />
-                  </div>
-                </div>
-              </div>
-              <a href="#" class="heart-icon"
-                ><span class="icon_heart_alt"></span
-              ></a>
               <a
-                href="#"
+                href="/KitchenAmenitiesStore/checkout/{{details_product.id}}"
                 type="button"
                 class="primary-btn add-cart"
                 data-id="{{details_product.id}}"
-                >Thêm vào giỏ hàng</a
+                >Mua sản phẩm</a
               >
               <ul>
                 <li>

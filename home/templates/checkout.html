@@ -1,0 +1,389 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zxx">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Ogani Template" />
+    <meta name="keywords" content="Ogani, unica, creative, html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Checkout</title>
+
+    <!-- Google Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Css Styles -->
+    <link
+      rel="stylesheet"
+      href="{% static 'css/hbootstrap.min.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/hfont-awesome.min.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/helegant-icons.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/hnice-select.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/hjquery-ui.min.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/howl.carousel.min.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/hslicknav.min.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/hstyle.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <!-- Google Fonts Roboto -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/mdb.min.css' %}"
+      type="text/css"
+    />
+  </head>
+
+  <body>
+    <style>
+      .checkout__order .checkout__order__total span {
+        float: right;
+        color: #1c1c1c;
+      }
+    </style>
+    {% include 'header.html' %}
+    <section class="from-blog spad">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="section-title from-blog__title">
+              <h2>Thanh Toán Đơn Hàng</h2>
+              <div class="breadcrumb__option" style="margin-top: 20px">
+                <a href="/KitchenAmenitiesStore/home" style="color: black"
+                  >Trang Chủ</a
+                >
+                <span style="color: black">Thanh Toán</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="checkout spad">
+      <div class="container">
+        <div class="checkout__form">
+          <h4>Chi tiết thanh toán</h4>
+          <form action="#" method="POST">
+            <div class="row">
+              <div class="col-lg-8 col-md-6">
+                <input
+                  id="product_id"
+                  required="true"
+                  value="{{product.id}}"
+                  style="display: none"
+                />
+                <div class="checkout__input">
+                  <p>Họ và tên<span>*</span></p>
+                  <input
+                    type="text"
+                    id="customer_name"
+                    name="name"
+                    required="true"
+                  />
+                </div>
+                <div class="checkout__input">
+                  <p>Địa chỉ<span>*</span></p>
+                  <input
+                    id="address"
+                    type="text"
+                    class="checkout__input__add"
+                    name="address"
+                    required="true"
+                  />
+                </div>
+                <div class="row">
+                  <div class="col-lg-6">
+                    <div class="checkout__input">
+                      <p>Số Điện Thoại<span>*</span></p>
+                      <input
+                        type="text"
+                        name="phone"
+                        required="true"
+                        id="phone_number"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="checkout__input">
+                      <p>Địa Chỉ Email<span>*</span></p>
+                      <input
+                        type="text"
+                        name="email"
+                        required="true"
+                        id="email"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="checkout__input">
+                  <p>Ghi chú đặt hàng</p>
+                  <input
+                    type="text"
+                    placeholder="Ghi chú về đơn đặt hàng của bạn, ví dụ: ghi chú đặc biệt cho giao hàng."
+                    name="note"
+                    id="note"
+                  />
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-6">
+                <div class="checkout__order">
+                  <h4>Đơn Đặt Hàng Của Bạn</h4>
+                  <div class="checkout__order__products">
+                    Sản Phẩm - {{product.name|slice:":10"}}...
+                    <span>Giá {{product.price}}</span>
+                  </div>
+                  <ul></ul>
+                  <div class="checkout__order__subtotal">
+                    Tạm tính <span>{{product.price}} VNĐ</span>
+                  </div>
+                  <div class="checkout__order__total" id="total_discount">
+                    Giảm <span>0 VNĐ</span>
+                  </div>
+                  <input
+                    type="hidden"
+                    name="total_price"
+                    value="${TotalPrice - PercentDiscount * TotalPrice}"
+                  />
+                  <input
+                    type="hidden"
+                    name="quantity"
+                    value="${TotalQuantity}"
+                  />
+                  <div class="checkout__order__total">
+                    Tổng Cộng
+                    <span id="total_price">{{product.price}} VNĐ</span>
+                  </div>
+                  <div class="checkout__input__radio">
+                    <input
+                      type="radio"
+                      id="payment_on_delivery"
+                      name="payment_method"
+                      value="1"
+                    />
+                    <label for="payment_on_delivery"
+                      >Thanh toán khi nhận hàng</label
+                    >
+                  </div>
+                  <div class="checkout__input__radio">
+                    <input
+                      type="radio"
+                      id="paypal"
+                      name="payment_method"
+                      value="2"
+                    />
+                    <label for="paypal">Paypal</label>
+                  </div>
+                  <div id="paypal-button-container"></div>
+                  <p id="result-message"></p>
+                  <button
+                    type="submit"
+                    id="btn-order"
+                    class="site-btn"
+                    style="display: none"
+                  >
+                    ĐẶT HÀNG
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+    {% include 'footer.html' %}
+
+    <!-- Js Plugins -->
+    <script src="{% static 'js/hjquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/hbootstrap.min.js' %}"></script>
+    <script src="{% static 'js/hjquery.nice-select.min.js' %}"></script>
+    <script src="{% static 'js/hjquery-ui.min.js' %}"></script>
+    <script src="{% static 'js/hjquery.slicknav.js' %}"></script>
+    <script src="{% static 'js/hmixitup.min.js' %}"></script>
+    <script src="{% static 'js/howl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/hmain.js' %}"></script>
+    <script src="{% static 'js/mdb.min.js' %}"></script>
+    <script src="{% static 'js/departments.js' %}"></script>
+    <script src="{% static 'js/trademark.js' %}"></script>
+    <script src="{% static 'js/details-product.js' %}"></script>
+    <script src="{% static 'js/current-user.js' %}"></script>
+    <script src="{% static 'js/payment-cod.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script
+      src="https://www.paypal.com/sdk/js?client-id=AWvDMJV9yU5i0-SOUV_SsgBcnoYcRFGoeFRMAh61OK4bvCsdfw8MqpcNObyODeMHfqN4ukzR7OCoV_Tm"
+      data-namespace="paypal_sdk"
+    ></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var paypalRadio = document.getElementById("paypal");
+        var codRadio = document.getElementById("payment_on_delivery");
+        var buttonOrder = document.getElementById("btn-order");
+        var paypalButtonContainer = document.getElementById(
+          "paypal-button-container"
+        );
+        paypalRadio.addEventListener("click", function () {
+          if (paypalRadio.checked) {
+            buttonOrder.style.display = "none";
+            paypal_sdk
+              .Buttons({
+                async createOrder() {
+                  const customerName = $("#customer_name").val();
+                  const address = $("#address").val();
+                  const phoneNumber = $("#phone_number").val();
+                  const email = $("#email").val();
+                  const note = $("#note").val();
+                  const productID = $("#product_id").val();
+                  const totalPrice = $("#total_price").text();
+                  const paymentMethod = "paypal";
+                  try {
+                    const response = await fetch("/api/v1/orders", {
+                      method: "POST",
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
+                      body: JSON.stringify({
+                        customer_info: {
+                          customer_name: customerName,
+                          address: address,
+                          phone_number: phoneNumber,
+                          email: email,
+                          note: note,
+                        },
+                        order_info: {
+                          product_id: productID,
+                          total_price: parseFloat(totalPrice.split(" ")[0]),
+                          amount: 1,
+                        },
+                        payment_method: paymentMethod,
+                      }),
+                    });
+
+                    const orderData = await response.json();
+                    console.log(orderData);
+
+                    if (orderData.message === "Success") {
+                      return orderData.data.payment_order_id;
+                    } else {
+                      const errorDetail = orderData?.details?.[0];
+                      const errorMessage = errorDetail
+                        ? `${errorDetail.issue} ${errorDetail.description} (${orderData.debug_id})`
+                        : JSON.stringify(orderData);
+
+                      throw new Error(errorMessage);
+                    }
+                  } catch (error) {
+                    console.error(error);
+                    Toastify({
+                      text: "Thanh toán đơn hàng thất bại. Vui lòng thử lại",
+                      duration: 3000,
+                      newWindow: true,
+                      close: true,
+                      gravity: "top",
+                      position: "center",
+                      backgroundColor:
+                        "linear-gradient(to right, #00b09b, #96c93d)",
+                    }).showToast();
+                  }
+                },
+                async onApprove(data, actions) {
+                  try {
+                    const response = await fetch(
+                      `/api/v1/orders/${data.orderID}/capture`,
+                      {
+                        method: "POST",
+                        headers: {
+                          "Content-Type": "application/json",
+                        },
+                      }
+                    );
+
+                    const orderData = await response.json();
+
+                    if (orderData.message !== "Success") {
+                      return actions.restart();
+                    } else {
+                      Toastify({
+                        text: "Thanh toán đơn hàng thành công",
+                        duration: 3000,
+                        newWindow: true,
+                        close: true,
+                        gravity: "top",
+                        position: "center",
+                        backgroundColor:
+                          "linear-gradient(to right, #00b09b, #96c93d)",
+                      }).showToast();
+                    }
+                  } catch (error) {
+                    Toastify({
+                      text: "Thanh toán đơn hàng thất bại. Vui lòng thử lại",
+                      duration: 3000,
+                      newWindow: true,
+                      close: true,
+                      gravity: "top",
+                      position: "center",
+                      backgroundColor:
+                        "linear-gradient(to right, #00b09b, #96c93d)",
+                    }).showToast();
+                    console.log(error);
+                  }
+                },
+              })
+              .render("#paypal-button-container");
+          } else {
+            paypalButtonContainer.style.display = "none";
+          }
+        });
+        codRadio.addEventListener("click", function () {
+          if (codRadio.checked) {
+            buttonOrder.style.display = "block";
+            paypalButtonContainer.style.display = "none";
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
