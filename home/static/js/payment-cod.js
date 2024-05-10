@@ -60,6 +60,7 @@ function processcingOrderCOD() {
               position: "center",
               backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
             }).showToast();
+            window.location.href = "/KitchenAmenitiesStore/orders/all";
           }
         },
       });

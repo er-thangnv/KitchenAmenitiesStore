@@ -2,11 +2,16 @@ import os
 from dotenv import load_dotenv
 from rest_framework.decorators import api_view
 import base64
+from django.shortcuts import render
 import requests
 import json
 from rest_framework.response import Response
-from order.models import Orders, OrderDetails, Status, Payments
+from order.models import Orders, OrderDetails, Status, Payments, PaymentMethods
+from product.models import Products
 from django.http import QueryDict
+from .serializers import OrdersSerializer
+from datetime import datetime
+from login.models import Accounts
 
 load_dotenv()
 
@@ -19,11 +24,21 @@ def create_order(request):
         account_id = ''
     else:
         account_id = current_user_id
-    print(isinstance(data, QueryDict))
     if isinstance(data, QueryDict):
-        data_json = json.loads(list(data.keys())[0])
-        customer_info = data_json['customer_info']
-        order_info = data_json['order_info']
+        data = request.data
+        data_json = {}
+        for key, value in data.items():
+            data_json[key] = value
+        customer_info = {}
+        for key, value in data_json.items():
+            if key.startswith('customer_info['):
+                field_name = key.split('[')[1].split(']')[0]
+                customer_info[field_name] = value
+        order_info = {}
+        for key, value in data_json.items():
+            if key.startswith('order_info['):
+                field_name = key.split('[')[1].split(']')[0]
+                order_info[field_name] = value
         if data_json['payment_method'] == 'cod':
             order = Orders(customer_name=customer_info['customer_name'], address=customer_info['address'], phone_number=customer_info['phone_number'], email=customer_info['email'], note=customer_info['note'], sub_total=order_info['total_price'], amount=1, total=order_info['total_price'], status=Status.WAITING.value, payment_method_id=1, account_id=account_id)
             order.save()
@@ -133,3 +148,41 @@ def generateAccessToken():
         return data.get('access_token')
     except Exception as e:
         raise requests.RequestException('Generate access token failed')
+    
+@api_view(['GET'])
+def get_all_orders(request):
+    current_user_id = request.session.get("current_user_id")
+    if current_user_id is None:
+        return render(request, 'login.html')
+    else:
+        items = []
+        orders = Orders.objects.filter(account_id=current_user_id).order_by('-created_at')
+        data_orders = OrdersSerializer(orders, many=True)
+        for order in data_orders.data:
+            payment_method = PaymentMethods.objects.get(id=order['payment_method_id'])
+            order_detail = OrderDetails.objects.get(order_id=order['id'])
+            product = Products.objects.get(id=order_detail.product_id)  
+            timestamp = datetime.strptime(order['created_at'], "%Y-%m-%dT%H:%M:%S.%fZ")
+            formatted_date = timestamp.strftime("%Y %B %d")
+            context = {
+            'order_info': {
+                'id': order['id'],
+                'total_price': order['total'],
+                'status': order['status'],
+                'payment_method': payment_method.name, 
+                'created_at': formatted_date
+            },
+            'product_info': {
+                'id': product.id,
+                'name': product.name,
+                'image': product.image,
+                'price': product.price
+            }
+            } 
+            items.append(context)
+        account = Accounts.objects.get(id=current_user_id)
+        data = {
+            'items': items
+        }
+        data['account'] = account
+        return render(request, 'order.html', data)
