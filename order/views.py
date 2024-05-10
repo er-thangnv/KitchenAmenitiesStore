@@ -7,7 +7,7 @@ import requests
 import json
 from rest_framework.response import Response
 from order.models import Orders, OrderDetails, Status, Payments, PaymentMethods
-from product.models import Products
+from product.models import Products, DescriptionsProduct
 from django.http import QueryDict
 from .serializers import OrdersSerializer
 from datetime import datetime
@@ -199,3 +199,42 @@ def cancel_order(request, payment_order_id):
             'order_id': payment.order_id
         }
     })
+
+@api_view(['GET'])
+def details_order(request, order_id):
+    current_user_id = request.session.get("current_user_id")
+    order = Orders.objects.get(id=order_id)
+    payment_method = PaymentMethods.objects.get(id=order.payment_method_id)
+    order_detail = OrderDetails.objects.get(order_id=order.id)
+    product = Products.objects.get(id=order_detail.product_id)  
+    description_product = DescriptionsProduct.objects.get(product_id=product.id)
+    formatted_date = order.created_at.strftime("%Y %B %d")
+    context = {
+            'customer_info': {
+                'id': current_user_id,
+                'name': order.customer_name,
+                'address': order.address,
+                'phone_number': order.phone_number,
+                'email': order.email
+            },
+            'order_info': {
+                'id': order.id,
+                'total_price': order.total,
+                'status': order.status,
+                'payment_method': payment_method.name, 
+                'note': order.note,
+                'created_at': formatted_date
+            },
+            'product_info': {
+                'id': product.id,
+                'name': product.name,
+                'image': product.image,
+                'price': product.price,
+                'brand': description_product.brand,
+                'color': description_product.color,
+                'description': description_product.description
+            }
+    } 
+    account = Accounts.objects.get(id=current_user_id)
+    context['account'] = account
+    return render(request, 'invoice.html', context)
