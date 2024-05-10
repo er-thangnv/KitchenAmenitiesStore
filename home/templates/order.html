@@ -111,7 +111,9 @@
                   <tr>
                     <td class="table-cell">#{{ item.order_info.id }}</td>
                     {% if item.order_info.status == "Success" %}
-                    <td class="text-success">Thành công</td>
+                    <td class="text-success">Thanh toán thành công</td>
+                    {% elif item.order_info.status == "Cancel" %}
+                    <td class="text-danger">Đơn hàng đã hủy</td>
                     {% else %}
                     <td class="text-warning">Đang chờ thanh toán</td>
                     {% endif %}

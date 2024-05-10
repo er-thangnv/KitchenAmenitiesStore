@@ -186,3 +186,16 @@ def get_all_orders(request):
         }
         data['account'] = account
         return render(request, 'order.html', data)
+    
+@api_view(['POST'])
+def cancel_order(request, payment_order_id):
+    payment = Payments.objects.get(payment_order_id=payment_order_id)
+    order = Orders.objects.get(id=payment.order_id)
+    order.status = Status.CANCEL.value
+    order.save()
+    return Response({
+        'message': 'Success',
+        'data': {
+            'order_id': payment.order_id
+        }
+    })
