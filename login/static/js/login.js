@@ -59,6 +59,16 @@ function callAPILogin(formData) {
           position: "center",
           backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
         }).showToast();
+      } else if (response.message === "Account is not verification") {
+        Toastify({
+          text: "Vui lòng xác nhận email trước khi đăng nhập",
+          duration: 3000,
+          newWindow: true,
+          close: true,
+          gravity: "top",
+          position: "center",
+          backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+        }).showToast();
       } else {
         Toastify({
           text: "Email hoặc mật khẩu chưa chính xác",

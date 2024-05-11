@@ -16,6 +16,10 @@ def handler_login(request):
   data = request.data
   try:
       account = Accounts.objects.get(email=data['email'])
+      if account.is_verified == False:
+         return Response({
+          'message': 'Account is not verification'
+        })
       password_hashed = account.password.encode('utf-8')
       password = data['password']
       password_bytes = password.encode('utf-8')

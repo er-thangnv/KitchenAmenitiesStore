@@ -120,6 +120,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
@@ -144,3 +150,10 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 SECURE_CROSS_ORIGIN_OPENER_POLICY='same-origin-allow-popups'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = f"{os.getenv('EMAIL_HOST')}"
+EMAIL_PORT = f"{os.getenv('EMAIL_PORT')}"
+EMAIL_HOST_USER = f"{os.getenv('EMAIL_HOST_USER')}"
+EMAIL_HOST_PASSWORD = f"{os.getenv('EMAIL_HOST_PASSWORD')}"
+EMAIL_USE_TLS = True
