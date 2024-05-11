@@ -3,6 +3,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import Products, DescriptionsProduct
 from .serializers import ProductsSerializer
+from urllib.parse import unquote
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # Create your views here.
@@ -42,22 +43,33 @@ def get_details_product(request, id):
 
 @api_view(['GET'])
 def get_all_products(request):
-    products_list = Products.objects.all()
-    paginator = Paginator(products_list, 8)
     page_number = request.GET.get("page")
-    try:
-        products = paginator.page(int(page_number))
-    except PageNotAnInteger:
-        products = paginator.page(1)
-    except EmptyPage:
-        products = paginator.page(paginator.num_pages)
-    serializer = ProductsSerializer(products, many=True)
-    has_next_page = products.has_next()
-    return Response({
-        'message': 'Success',
-        'data': {
-            'items': serializer.data,
-            'page': page_number,
-            'has_next_page': has_next_page
+    search_name = request.GET.get("search")
+    if page_number is not None:
+        products_list = Products.objects.all()
+        paginator = Paginator(products_list, 8)
+        try:
+            products = paginator.page(int(page_number))
+        except PageNotAnInteger:
+            products = paginator.page(1)
+        except EmptyPage:
+            products = paginator.page(paginator.num_pages)
+        serializer = ProductsSerializer(products, many=True)
+        has_next_page = products.has_next()
+        return Response({
+            'message': 'Success',
+            'data': {
+                'items': serializer.data,
+                'page': page_number,
+                'has_next_page': has_next_page
+            }
+        })
+    elif search_name is not None:
+        decode_search_name = unquote(search_name)
+        products = Products.objects.filter(name__contains=decode_search_name)
+        data_products = ProductsSerializer(products, many=True)
+        context = {
+            'items': data_products.data
         }
-    }) 
+        print(context)
+        return render(request, 'category.html', context)
