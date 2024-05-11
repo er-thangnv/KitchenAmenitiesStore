@@ -1,0 +1,305 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zxx">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Ogani Template" />
+    <meta name="keywords" content="Ogani, unica, creative, html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Category</title>
+
+    <!-- Google Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Css Styles -->
+    <link
+      rel="stylesheet"
+      href="{% static 'css/hbootstrap.min.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/hfont-awesome.min.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/helegant-icons.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/hnice-select.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/hjquery-ui.min.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/howl.carousel.min.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/hslicknav.min.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/hstyle.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <!-- Google Fonts Roboto -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/mdb.min.css' %}"
+      type="text/css"
+    />
+  </head>
+
+  <body>
+    <style>
+      .product__discount__item__pic {
+        height: 180px;
+        width: 180px;
+        position: relative;
+        overflow: hidden;
+      }
+      .featured__item__pic {
+        height: 180px;
+        width: 180px;
+        position: relative;
+        overflow: hidden;
+        background-position: center center;
+      }
+      #search-result .suggest_search {
+        background: #fff;
+        border: 1px solid #eee;
+        top: -24px;
+        z-index: 100000;
+        left: 2px;
+        right: 2px;
+        border-radius: 6px;
+        box-shadow: 0 1px 8px rgb(0 0 0 / 30%);
+      }
+      #search-result .suggest_search li {
+        display: block;
+        overflow: hidden;
+        padding: 10px;
+        border-bottom: 1px solid #eee;
+      }
+      .hero__search__form {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      #search-result .suggest_search li.ttitle {
+        position: relative;
+      }
+      #search-result .suggest_search li .viewed {
+        background: #f5f5f5;
+        font-size: 13px;
+        color: #666;
+        font-weight: 400;
+        padding: 10px;
+        margin: -15px -10px;
+      }
+      .search_image {
+        height: 60px;
+        width: 60px;
+      }
+      .search_name {
+        color: #252525;
+      }
+      .carousel-inner {
+        position: relative;
+      }
+      #search-result {
+        position: absolute;
+        z-index: 999;
+        margin-left: 180px;
+      }
+      .item_brand {
+        border: 1px solid;
+        padding: 4px;
+        border-radius: 10px;
+      }
+      .c-btnbox,
+      .item_brand {
+        align-items: center;
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        color: #333;
+        display: flex;
+        font-size: 14px;
+        justify-content: center;
+        line-height: 17px;
+        margin-bottom: 10px;
+        margin-right: 10px;
+        padding: 2px;
+      }
+      .filter-list {
+        display: flex;
+        flex-wrap: wrap;
+        margin-left: -32px;
+      }
+    </style>
+
+    {% include 'header.html' %}
+    <section class="product spad">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3 col-md-5">
+            <div class="sidebar">
+              <div class="sidebar__item">
+                <h4>Giá</h4>
+                <ul class="filter-list">
+                  <li class="item_price">
+                    <a href="0/1000000" class="c-btnbox">Dưới 1 triệu</a>
+                  </li>
+                  <li class="item_price">
+                    <a href="1000000/5000000" class="c-btnbox"
+                      >Từ 1 đến 5 triệu</a
+                    >
+                  </li>
+                  <li class="item_price">
+                    <a href="5000000/90000000" class="c-btnbox"
+                      >Từ 5 đến 9 triệu</a
+                    >
+                  </li>
+                  <li class="item_price">
+                    <a href="9000000/50000000" class="c-btnbox">Trên 9 triệu</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="sidebar__item sidebar__item__color--option">
+                <h4>Màu sắc</h4>
+                <div class="sidebar__item__color sidebar__item__color--white">
+                  <a href="color/white" class="item_color" id="white">
+                    <label for="white">Trắng</label>
+                  </a>
+                </div>
+                <div class="sidebar__item__color sidebar__item__color--gray">
+                  <a href="color/yellow" class="item_color" id="gray">
+                    <label for="gray">Vàng</label>
+                  </a>
+                </div>
+                <div class="sidebar__item__color sidebar__item__color--red">
+                  <a href="color/red" class="item_color" id="red">
+                    <label for="red">Đỏ</label>
+                  </a>
+                </div>
+                <div class="sidebar__item__color sidebar__item__color--black">
+                  <a href="color/black" class="item_color" id="black">
+                    <label for="black">Đen</label>
+                  </a>
+                </div>
+                <div class="sidebar__item__color sidebar__item__color--blue">
+                  <a href="color/blue" class="item_color" id="blue">
+                    <label for="blue">Xanh biển</label>
+                  </a>
+                </div>
+                <div class="sidebar__item__color sidebar__item__color--green">
+                  <a href="color/green" class="item_color" id="green">
+                    <label for="green">Xanh lá</label>
+                  </a>
+                </div>
+              </div>
+              <div class="sidebar__item">
+                <h4>Thương Hiệu</h4>
+                <ul class="filter-list">
+                  {% for trade_makr in trade_marks %}
+                  <div class="sidebar__item__size">
+                    <li class="item_price">
+                      <a href="#" class="item_brand">{{trade_makr.name}}</a>
+                    </li>
+                  </div>
+                  {%endfor%}
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-9 col-md-7">
+            <div class="container">
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="section-title from-blog__title">
+                    <h2>Tất cả sản phẩm</h2>
+                  </div>
+                </div>
+              </div>
+              <div class="row featured__filter">
+                {%for item in items %}
+                <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat">
+                  <div class="featured__item">
+                    <div
+                      class="featured__item__pic set-bg"
+                      data-setbg="{{item.image}}"
+                      style="background-image: url({{item.image}})"
+                    >
+                      <ul class="featured__item__pic__hover">
+                        <li>
+                          <a
+                            class="add-cart"
+                            href="/KitchenAmenitiesStore/checkout/{{item.id}}"
+                            ><i class="fa fa-shopping-cart"></i
+                          ></a>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="featured__item__text">
+                      <h6>
+                        <a href="/KitchenAmenitiesStore/products/{{item.id}}"
+                          >{{item.name}}</a
+                        >
+                      </h6>
+                      <h5>{{item.price}} VNĐ</h5>
+                    </div>
+                  </div>
+                </div>
+                {%endfor%}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    {% include 'footer.html' %}
+
+    <!-- Js Plugins -->
+    <script src="{% static 'js/hjquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/hbootstrap.min.js' %}"></script>
+    <script src="{% static 'js/hjquery.nice-select.min.js' %}"></script>
+    <script src="{% static 'js/hjquery-ui.min.js' %}"></script>
+    <script src="{% static 'js/hjquery.slicknav.js' %}"></script>
+    <script src="{% static 'js/hmixitup.min.js' %}"></script>
+    <script src="{% static 'js/howl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/hmain.js' %}"></script>
+    <script src="{% static 'js/mdb.min.js' %}"></script>
+    <script src="{% static 'js/departments.js' %}"></script>
+    <script src="{% static 'js/trademark.js' %}"></script>
+    <script src="{% static 'js/current-user.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  </body>
+</html>
