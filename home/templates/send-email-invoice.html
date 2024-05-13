@@ -1,0 +1,205 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="{% static 'css/invoice.css' %}"
+      type="text/css"
+    />
+    <!-- Google Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Css Styles -->
+    <link
+      rel="stylesheet"
+      href="{% static 'css/hbootstrap.min.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/hfont-awesome.min.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/helegant-icons.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/hnice-select.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/hjquery-ui.min.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/howl.carousel.min.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/hslicknav.min.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/hstyle.css' %}"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <!-- Google Fonts Roboto -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/mdb.min.css' %}"
+      type="text/css"
+    />
+  </head>
+  <body>
+    <div class="receipt-content">
+      <div class="container bootstrap snippets bootdey">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="invoice-wrapper">
+              <div class="intro">
+                Hi <strong>{{ customer_info.name }}</strong>,
+              </div>
+              <div class="payment-details">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <span></span>
+                    <strong> </strong>
+                    <p><br /></p>
+                    <span></span>
+                    <strong> </strong>
+                  </div>
+                  <div class="col-sm-6 text-right">
+                    {% if order_info.status == "Success"%}
+                    <span>Trạng thái</span>
+                    <button type="button" class="btn btn-success">
+                      Thành công
+                    </button>
+                    {% elif order_info.status == "Waiting"%}
+                    <span>Trạng thái</span>
+                    <button type="button" class="btn btn-warning">
+                      Đang chờ
+                    </button>
+                    {% else %}
+                    <span>Trạng thái</span>
+                    <button type="button" class="btn btn-danger">Đã hủy</button>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+
+              <div class="payment-info">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <span>Mã đơn hàng</span>
+                    <strong>#{{ order_info.id }}</strong>
+                  </div>
+                  <div class="col-sm-6 text-right">
+                    <span>Ngày đặt hàng</span>
+                    <strong>{{ order_info.created_at }}</strong>
+                  </div>
+                </div>
+              </div>
+
+              <div class="payment-details">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <span>Mã khách hàng</span>
+                    <strong> {{ customer_info.id }} </strong>
+                    <p><br /></p>
+                    <span>Địa chỉ</span>
+                    <strong> {{ customer_info.address }} </strong>
+                  </div>
+                  <div class="col-sm-6 text-right">
+                    <span>Số điện thoại</span>
+                    <strong> {{ customer_info.phone_number }} </strong>
+                    <p><br /></p>
+                    <span>Email</span>
+                    <strong> {{ customer_info.email }} </strong>
+                  </div>
+                </div>
+              </div>
+
+              <div class="line-items">
+                <div class="headers clearfix">
+                  <div class="row">
+                    <div class="col-xs-4">Sản phẩm</div>
+                  </div>
+                </div>
+                <div class="items">
+                  <div class="row item">
+                    <div class="col-xs-4 desc">{{ product_info.name }}</div>
+                    <div class="col-xs-3 qty">1</div>
+                    <div class="col-xs-5 amount text-right">
+                      {{ product_info.price }} VNĐ
+                    </div>
+                  </div>
+                </div>
+                <div class="total text-right">
+                  <p class="extra-notes">
+                    <strong>Ghi chú giao hàng</strong>
+                    {% if order_info.note == ""%} Không có ghi chú {% else %}
+                    order_info.note {% endif %}
+                  </p>
+                  <div class="field grand-total">
+                    Tổng tiền đơn hàng <span>{{ order_info.total_price }}</span>
+                  </div>
+                </div>
+
+                <div class="print">
+                  <a href="#">
+                    <i class="fa fa-print"></i>
+                    In hóa đơn
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Js Plugins -->
+    <script src="{% static 'js/hjquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/hbootstrap.min.js' %}"></script>
+    <script src="{% static 'js/hjquery.nice-select.min.js' %}"></script>
+    <script src="{% static 'js/hjquery-ui.min.js' %}"></script>
+    <script src="{% static 'js/hjquery.slicknav.js' %}"></script>
+    <script src="{% static 'js/hmixitup.min.js' %}"></script>
+    <script src="{% static 'js/howl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/hmain.js' %}"></script>
+    <script src="{% static 'js/departments.js' %}"></script>
+    <script src="{% static 'js/trademark.js' %}"></script>
+    <script src="{% static 'js/current-user.js' %}"></script>
+    <script src="{% static 'js/products-all.js' %}"></script>
+    <script src="{% static 'js/mdb.min.js' %}"></script>
+    <script src="{% static 'js/search.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  </body>
+</html>
