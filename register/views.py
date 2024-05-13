@@ -10,6 +10,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 import jwt
+from django_rq import job
 
 SECRET_KEY = '8Zz5tw0Ionm3XPZZfN0NOml3z9FMfmpgXwovR9fp6ryDIoGRM8EPHAB6iHsc0fb'
 
@@ -33,13 +34,7 @@ def handler_register(request):
         account = Accounts(id=account_id, email=data['email'], user_name=data['name'], password=hashed_password.decode('utf-8'), role='user', is_verified=False)
         account.save()
         token_verify = generate_token_verification(str(account_id))
-        subject = 'Email verification account KitchenAmenitiesStore'
-        from_email = 'KitchenAmenitiesStore@no-reply.com'
-        to_emails = [data['email']]
-        html_content = render_to_string('send-mail.html', {'token_verify': token_verify})
-        email = EmailMultiAlternatives(subject, strip_tags(html_content), from_email, to_emails)
-        email.attach_alternative(html_content, "text/html")
-        email.send()
+        send_email.delay(token_verify, data['email'])
         return Response({
             'message': 'Register account is successfully'
         })
@@ -72,3 +67,13 @@ def vefiry_token(request):
         return None  
     except jwt.InvalidTokenError:
         return None 
+
+@job
+def send_email(token_verify, to_email):
+    subject = 'Email verification account KitchenAmenitiesStore'
+    from_email = 'KitchenAmenitiesStore@no-reply.com'
+    to_emails = [to_email]
+    html_content = render_to_string('send-mail.html', {'token_verify': token_verify})
+    email = EmailMultiAlternatives(subject, strip_tags(html_content), from_email, to_emails)
+    email.attach_alternative(html_content, "text/html")
+    email.send()

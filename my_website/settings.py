@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     'user',
     'product',
     'checkout',
-    'order'
+    'order',
+    'django_rq'
 ]
 
 MIDDLEWARE = [
@@ -124,6 +125,14 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
+}
+
+RQ_QUEUES = {
+    'default': {
+        'HOST': f"{os.getenv('RD_HOST')}",
+        'PORT': f"{os.getenv('RD_PORT')}",
+        'DEFAULT_TIMEOUT': 360,
+    },
 }
 
 
