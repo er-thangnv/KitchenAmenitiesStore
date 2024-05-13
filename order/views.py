@@ -12,6 +12,10 @@ from django.http import QueryDict
 from .serializers import OrdersSerializer
 from datetime import datetime
 from login.models import Accounts
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+from django.core.mail import EmailMultiAlternatives
+from django_rq import job
 
 load_dotenv()
 
@@ -44,6 +48,8 @@ def create_order(request):
             order.save()
             order_details = OrderDetails(product_id=order_info['product_id'], order_id=order.id)
             order_details.save()
+            context = get_data_details_order(current_user_id, order.id)
+            send_invoice_to_email.delay(context, customer_info['email'])
             return Response({
                 'message': 'Success',
                 'data': {
@@ -101,6 +107,8 @@ def create_order(request):
 
 @api_view(['POST'])
 def capture_order(request, payment_order_id):
+    current_user_id = request.session.get("current_user_id")
+    user = Accounts.objects.get(id=current_user_id)
     access_token = generateAccessToken()
     paypal_url_base = os.getenv('PAYPAL_URL_BASE')
     url = f"{paypal_url_base}/v2/checkout/orders/{payment_order_id}/capture"
@@ -120,6 +128,8 @@ def capture_order(request, payment_order_id):
             order = Orders.objects.get(id=payment.order_id)
             order.status = Status.SUCCESS.value
             order.save()
+            context = get_data_details_order(current_user_id, order.id)
+            send_invoice_to_email.delay(context, user.email)
             return Response({
                 'message': 'Success',
                 'data': {
@@ -189,10 +199,14 @@ def get_all_orders(request):
     
 @api_view(['POST'])
 def cancel_order(request, payment_order_id):
+    current_user_id = request.session.get("current_user_id")
+    user = Accounts.objects.get(id=current_user_id)
     payment = Payments.objects.get(payment_order_id=payment_order_id)
     order = Orders.objects.get(id=payment.order_id)
     order.status = Status.CANCEL.value
     order.save()
+    context = get_data_details_order(current_user_id, order.id)
+    send_invoice_to_email.delay(context, user.email)
     return Response({
         'message': 'Success',
         'data': {
@@ -238,3 +252,49 @@ def details_order(request, order_id):
     account = Accounts.objects.get(id=current_user_id)
     context['account'] = account
     return render(request, 'invoice.html', context)
+
+
+@job
+def send_invoice_to_email(context, to_email):
+    subject = f"KitchenAmenitiesStore invoice of order"
+    from_email = 'KitchenAmenitiesStore@no-reply.com'
+    to_emails = [to_email]
+    html_content = render_to_string('send-email-invoice.html', context)
+    email = EmailMultiAlternatives(subject, strip_tags(html_content), from_email, to_emails)
+    email.attach_alternative(html_content, "text/html")
+    email.send()
+
+def get_data_details_order(current_user_id, order_id):
+    order = Orders.objects.get(id=order_id)
+    payment_method = PaymentMethods.objects.get(id=order.payment_method_id)
+    order_detail = OrderDetails.objects.get(order_id=order.id)
+    product = Products.objects.get(id=order_detail.product_id)  
+    description_product = DescriptionsProduct.objects.get(product_id=product.id)
+    formatted_date = order.created_at.strftime("%Y %B %d")
+    context = {
+            'customer_info': {
+                'id': current_user_id,
+                'name': order.customer_name,
+                'address': order.address,
+                'phone_number': order.phone_number,
+                'email': order.email
+            },
+            'order_info': {
+                'id': order.id,
+                'total_price': order.total,
+                'status': order.status,
+                'payment_method': payment_method.name, 
+                'note': order.note,
+                'created_at': formatted_date
+            },
+            'product_info': {
+                'id': product.id,
+                'name': product.name,
+                'image': product.image,
+                'price': product.price,
+                'brand': description_product.brand,
+                'color': description_product.color,
+                'description': description_product.description
+            }
+    } 
+    return context
